@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @package     Accorin/CmsContent
+ * @version     1.0.0
+ * @author      Accorin <engineering@accorin.com>
+ * @copyright   Copyright © 2022. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Accorin_CmsContent:etc/accorin_content.xsd">
+    <blocks>
+        <block identifier="footer-links">
+            <title>Footer</title>
+            <version>1.0.0</version>
+            <module>Accorin_CmsContent</module>
+        </block>
+    </blocks>
+    <pages>
+        <page identifier="home">
+            <title>Home Page</title>
+            <page_layout>cms-full-width</page_layout>
+            <content_heading><![CDATA[Home Page]]></content_heading>
+            <version>1.0.0</version>
+            <module>Accorin_CmsContent</module>
+        </page>
+        <page identifier="styleguide">
+            <title>Style Guide</title>
+            <page_layout>cms-full-width</page_layout>
+            <content_heading><![CDATA[Style Guide]]></content_heading>
+            <version>1.0.0</version>
+            <module>Accorin_CmsContent</module>
+        </page>
+    </pages>
+    <templates>
+        <template identifier="sample-quotes-template">
+            <preview_image>.template-manager/sample-quotes.jpg</preview_image>
+            <type>any</type>
+            <version>1.0.0</version>
+            <module>Accorin_CmsContent</module>
+        </template>
+    </templates>
+    <assets>
+        <asset identifier="sample-quotes.jpg">
+            <destination>.template-manager/sample-quotes.jpg</destination>
+            <version>1.0.0</version>
+            <module>Accorin_CmsContent</module>
+        </asset>
+        <asset identifier="sample-quotes-thumb.jpg">
+            <destination>.template-manager/sample-quotes-thumb.jpg</destination>
+            <version>1.0.0</version>
+            <module>Accorin_CmsContent</module>
+        </asset>
+    </assets>
+</config>

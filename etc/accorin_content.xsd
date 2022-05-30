@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @package     Accorin/CmsContent
+ * @version     1.0.0
+ * @author      Accorin <engineering@accorin.com>
+ * @copyright   Copyright © 2022. All rights reserved.
+ */
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="pages" type="cmsPages" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="blocks" type="cmsBlocks" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="assets" type="mediaAssets" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="widgets" type="cmsWidgets" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="templates" type="cmsTemplates" />
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="cmsTemplates">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="template" type="cmsTemplate" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsTemplate">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="module" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="version" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="file" minOccurs="1" maxOccurs="1" />
+            <xs:element name="type" minOccurs="1" maxOccurs="1" />
+            <xs:element name="preview_image" minOccurs="1" maxOccurs="1" />
+            <xs:element name="depends" minOccurs="0" maxOccurs="1" type="cmsDepends" />
+        </xs:choice>
+        <xs:attribute name="identifier" type="xs:string" use="required"/>
+        <xs:attribute name="iterator" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="mediaAssets">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="asset" type="mediaAsset" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="mediaAsset">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="destination" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="module" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="version" minOccurs="1" maxOccurs="1" nillable="false" />
+        </xs:choice>
+        <xs:attribute name="identifier" type="xs:string" use="required"/>
+        <xs:attribute name="iterator" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="cmsWidgets">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="widget" type="cmsWidget" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsWidget">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="theme_id" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="type" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="page_groups" minOccurs="1" maxOccurs="1" nillable="false" type="cmsWidgetPageGroups" />
+            <xs:element name="parameters" minOccurs="1" maxOccurs="1" nillable="false" type="cmsWidgetParameters" />
+            <xs:element name="title" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="module" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="version" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="depends" minOccurs="0" maxOccurs="1" type="cmsDepends" />
+            <xs:element name="stores" minOccurs="0" maxOccurs="1" type="cmsStores" />
+        </xs:choice>
+        <xs:attribute name="identifier" type="xs:string" use="required"/>
+        <xs:attribute name="iterator" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="cmsWidgetPageGroups">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="page_group" type="cmsWidgetPageGroup" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsWidgetPageGroup">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="page_id" />
+            <xs:element name="layout_handle" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="block" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="for" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="template" minOccurs="1" maxOccurs="1" nillable="false" />
+        </xs:choice>
+        <xs:attribute name="type" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="cmsWidgetParameters">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="parameter" type="cmsWidgetParameter" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsWidgetParameter">
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="cmsPages">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="page" type="cmsPage" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsPage">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="title" />
+            <xs:element name="page_layout" />
+            <xs:element name="content_heading" />
+            <xs:element name="module" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="version" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="depends" minOccurs="0" maxOccurs="1" type="cmsDepends" />
+            <xs:element name="stores" minOccurs="0" maxOccurs="1" type="cmsStores" />
+        </xs:choice>
+        <xs:attribute name="identifier" type="xs:string" use="required"/>
+        <xs:attribute name="iterator" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="cmsBlocks">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="block" type="cmsBlock" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsBlock">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="title" />
+            <xs:element name="module" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="version" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xs:element name="depends" minOccurs="0" maxOccurs="1" type="cmsDepends" />
+            <xs:element name="stores" minOccurs="0" maxOccurs="1" type="cmsStores" />
+        </xs:choice>
+        <xs:attribute name="identifier" type="xs:string" use="required"/>
+        <xs:attribute name="iterator" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="cmsDepends">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="block" type="cmsDependBlock" />
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="page" type="cmsDependPage" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsDependBlock">
+        <xs:attribute name="identifier" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="cmsDependPage">
+        <xs:attribute name="identifier" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="cmsStores">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="store" type="cmsStore" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cmsStore">
+        <xs:attribute name="code" type="xs:string" use="required" />
+    </xs:complexType>
+</xs:schema>

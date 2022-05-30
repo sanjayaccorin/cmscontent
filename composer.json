@@ -1,0 +1,21 @@
+{
+    "name": "accorin/module-cms-content",
+    "type": "magento2-module",
+    "require": {
+        "php": "~7.2.0||~7.3.0||~7.4.0",
+        "magento/framework": "102.0.*"
+    },
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Accorin\\CmsContent\\": ""
+        }
+    },
+    "version": "1.0.0"
+}

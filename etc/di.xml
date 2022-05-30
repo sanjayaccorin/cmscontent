@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @package     Accorin/CmsContent
+ * @version     1.0.0
+ * @author      Accorin <engineering@accorin.com>
+ * @copyright   Copyright © 2022. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="ContentDataReader" type="Magento\Framework\Config\Reader\Filesystem">
+        <arguments>
+            <argument name="converter" xsi:type="object">Accorin\CmsContent\Model\Config\Converter</argument>
+            <argument name="schemaLocator" xsi:type="object">Accorin\CmsContent\Model\Config\SchemaLocator</argument>
+            <argument name="fileName" xsi:type="string">accorin_content.xml</argument>
+            <argument name="idAttributes" xsi:type="array">
+                <item name="/config/pages/page" xsi:type="string">identifier</item>
+                <item name="/config/blocks/block" xsi:type="string">identifier</item>
+                <item name="/config/assets/asset" xsi:type="string">identifier</item>
+                <item name="/config/templates/template" xsi:type="string">identifier</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="cmsContentVersionsPageConverter" type="Accorin\CmsContent\Model\Config\Converter\DefaultConverter">
+        <arguments>
+            <argument name="typeName" xsi:type="string">pages</argument>
+            <argument name="entryXPath" xsi:type="string">/config/pages/page</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="cmsContentVersionsBlockConverter" type="Accorin\CmsContent\Model\Config\Converter\DefaultConverter">
+        <arguments>
+            <argument name="typeName" xsi:type="string">blocks</argument>
+            <argument name="entryXPath" xsi:type="string">/config/blocks/block</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="cmsContentVersionsAssetConverter" type="Accorin\CmsContent\Model\Config\Converter\DefaultConverter">
+        <arguments>
+            <argument name="typeName" xsi:type="string">assets</argument>
+            <argument name="entryXPath" xsi:type="string">/config/assets/asset</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="cmsContentVersionsTemplateConverter" type="Accorin\CmsContent\Model\Config\Converter\DefaultConverter">
+        <arguments>
+            <argument name="typeName" xsi:type="string">templates</argument>
+            <argument name="entryXPath" xsi:type="string">/config/templates/template</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Accorin\CmsContent\Model\Config\Converter">
+        <arguments>
+            <argument name="converters" xsi:type="array">
+                <item name="pageConverter" xsi:type="object">cmsContentVersionsPageConverter</item>
+                <item name="blockConverter" xsi:type="object">cmsContentVersionsBlockConverter</item>
+                <item name="assetConverter" xsi:type="object">cmsContentVersionsAssetConverter</item>
+                <item name="widgetConverter" xsi:type="object">Accorin\CmsContent\Model\Config\Converter\WidgetConverter</item>
+                <item name="templateConverter" xsi:type="object">cmsContentVersionsTemplateConverter</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Accorin\CmsContent\Model\Config\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">ContentDataReader</argument>
+            <argument name="cacheId" xsi:type="string">accorin_content_install_cache</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Accorin\CmsContent\Model\PageBuilder\Template\Repository"
+                 type="Magento\PageBuilder\Model\TemplateRepository">
+        <arguments>
+            <argument name="searchResultsFactory" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\SearchResultsFactory</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Accorin\CmsContent\Model\ContentVersion\Action\Save\Template">
+        <arguments>
+            <argument name="templateRepository" xsi:type="object">Accorin\CmsContent\Model\PageBuilder\Template\Repository</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Accorin\CmsContent\Model\ContentVersion\Action\Save"
+                 type="Accorin\CmsContent\Model\ContentVersion\Action\ActionPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="page" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\Save\Page</item>
+                <item name="block" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\Save\Block</item>
+                <item name="assets" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\Save\Asset</item>
+                <item name="widgets" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\Save\Widget</item>
+                <item name="templates" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\Save\Template</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Accorin\CmsContent\Model\ContentVersion\Action\PostProcess"
+                 type="Accorin\CmsContent\Model\ContentVersion\Action\ActionPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="page" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\PostProcess\Page</item>
+                <item name="block" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\PostProcess\Block</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Accorin\CmsContent\Model\ContentVersion\Action\ProcessContent">
+        <arguments>
+            <argument name="saveAction" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\Save</argument>
+            <argument name="postProcessAction" xsi:type="object">Accorin\CmsContent\Model\ContentVersion\Action\PostProcess</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="cmsCoreInstallContent" xsi:type="object">Accorin\CmsContent\Console\Command\InstallContent</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
