@@ -1,0 +1,13 @@
+{
+    "aerin_content_version": {
+        "column": {
+            "content_id": true,
+            "type": true,
+            "identifier": true,
+            "version": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
